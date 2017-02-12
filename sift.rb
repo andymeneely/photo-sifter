@@ -1,4 +1,4 @@
-require 'exif'
+require 'exifr'
 require 'slop'
 require 'fileutils'
 require 'digest/sha2'
@@ -20,17 +20,21 @@ end
 
 in_dir = File.expand_path(opts['input'])
 out_dir = File.expand_path(opts['output'])
-puts "Indexing the output directory..."
-image_hashes = Dir["#{out_dir}/**/*.{jpg,JPG}"].inject({}) do |memo, f|
+puts "#{Time.now} Indexing the output directory..."
+image_hashes = Dir["#{out_dir}/**/*.jpg"].inject({}) do |memo, f|
   memo[Digest::SHA256.base64digest(File.read(f))] = true; memo
 end
 
-puts "Copying files..."
-Dir["#{in_dir}/**/*.{jpg,JPG}"].each do |f|
-  puts "Processing: #{f}"
-  exif = Exif::Data.new f
+puts "#{Time.now} Copying files..."
+Dir["#{in_dir}/**/*.jpg"].each do |f|
+  puts "#{Time.now} Processing: #{f}"
+  exif = EXIFR::JPEG.new f
   hash = Digest::SHA256.base64digest(File.read(f))
   # Make the directory
+  if(exif.date_time_original.nil?)
+    puts ".. FAIL: date_time_original did not exist. Here's the full exif: #{exif.to_hash}"
+    next
+  end
   dir = "#{out_dir}/#{exif.date_time_original.strftime('%Y-%m%b')}"
   FileUtils.mkdir_p dir
   if image_hashes[hash]

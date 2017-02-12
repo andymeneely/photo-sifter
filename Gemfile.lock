@@ -1,15 +1,15 @@
 GEM
   remote: https://rubygems.org/
   specs:
-    exif (1.0.1)
+    exifr (1.2.5)
     slop (4.4.1)
 
 PLATFORMS
-  ruby
+  x64-mingw32
 
 DEPENDENCIES
-  exif
+  exifr
   slop
 
 BUNDLED WITH
-   1.11.2
+   1.13.6
