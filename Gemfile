@@ -1,4 +1,4 @@
 source 'https://rubygems.org'
 
 gem 'exif'
-gem 'mercenary'
+gem 'slop'
