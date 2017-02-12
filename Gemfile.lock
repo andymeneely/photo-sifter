@@ -1,0 +1,15 @@
+GEM
+  remote: https://rubygems.org/
+  specs:
+    exif (1.0.1)
+    mercenary (0.3.6)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  exif
+  mercenary
+
+BUNDLED WITH
+   1.11.2
